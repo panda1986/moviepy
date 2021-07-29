@@ -90,6 +90,8 @@ class FFMPEG_AudioReader:
                         "stderr": sp.PIPE,
                         "stdin": DEVNULL}
 
+        print("FFMPEG_AudioReader init, cmd=%s" % (cmd))
+
         if os.name == "nt":
             popen_params["creationflags"] = 0x08000000
 

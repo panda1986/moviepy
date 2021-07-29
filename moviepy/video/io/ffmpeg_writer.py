@@ -117,6 +117,8 @@ class FFMPEG_VideoWriter:
             filename
         ])
 
+        print("video write, cmd=%s" % (cmd))
+
         popen_params = {"stdout": DEVNULL,
                         "stderr": logfile,
                         "stdin": sp.PIPE}
@@ -209,7 +211,7 @@ def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
         logfile = open(filename + ".log", 'w+')
     else:
         logfile = None
-    logger(message='Moviepy - Writing video %s\n' % filename)
+    logger(message="Moviepy - Writing video %s, fps=%s bitrate=%s, preset=%s, with_mask=%s, audiofile=%s, threads=%s, ffmpeg_params=%s\n" % (filename, fps, bitrate, preset, withmask, audiofile, threads, ffmpeg_params))
     with FFMPEG_VideoWriter(filename, clip.size, fps, codec = codec,
                                 preset=preset, bitrate=bitrate, logfile=logfile,
                                 audiofile=audiofile, threads=threads,
@@ -250,6 +252,7 @@ def ffmpeg_write_image(filename, image, logfile=False):
     else:
         log_file = sp.PIPE
 
+    print("write image, cmd=%s" % (cmd))
     popen_params = {"stdout": DEVNULL,
                     "stderr": log_file,
                     "stdin": sp.PIPE}

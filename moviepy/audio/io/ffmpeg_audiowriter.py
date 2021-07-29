@@ -59,6 +59,7 @@ class FFMPEG_AudioWriter:
                + (ffmpeg_params if ffmpeg_params else [])
                + [filename])
 
+        print("FFMPEG_AudioWriter, cmd=%s" % (cmd))
         popen_params = {"stdout": DEVNULL,
                         "stderr": logfile,
                         "stdin": sp.PIPE}

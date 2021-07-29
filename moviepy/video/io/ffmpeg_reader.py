@@ -177,6 +177,7 @@ class FFMPEG_VideoReader:
         if pos == self.pos:
             return self.lastread
         elif (pos < self.pos) or (pos > self.pos + 100):
+            print("get_frame, pos=%s, self.pos=%s, reinit, t=%s" % (pos, self.pos, t))
             self.initialize(t)
             self.pos = pos
         else:
@@ -187,6 +188,7 @@ class FFMPEG_VideoReader:
 
     def close(self):
         if self.proc:
+            print("close ffmpeg video cmd, pid=%s" % (self.proc.pid))
             self.proc.terminate()
             self.proc.stdout.close()
             self.proc.stderr.close()
@@ -226,7 +228,7 @@ def ffmpeg_read_image(filename, with_mask=True):
     return im
 
 
-def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True,
+def ffmpeg_parse_infos(filename, print_infos=True, check_duration=True,
                        fps_source='tbr'):
     """Get file infos using ffmpeg.
 
@@ -251,6 +253,7 @@ def ffmpeg_parse_infos(filename, print_infos=False, check_duration=True,
                     "stderr": sp.PIPE,
                     "stdin": DEVNULL}
 
+    print("ffmpeg_parse_infos, cmd=%s" % (cmd))
     if os.name == "nt":
         popen_params["creationflags"] = 0x08000000
 
