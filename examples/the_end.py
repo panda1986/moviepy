@@ -1,8 +1,8 @@
 from moviepy.editor import *
 from moviepy.video.tools.drawing import circle
 
-clip = VideoFileClip("../../videos/badl-0006.mov", audio=False).\
-           subclip(26,31).\
+clip = VideoFileClip("./sources/audrey.mp4", audio=False).\
+           subclip(2,6).\
            add_mask()
            
 w,h = clip.size
@@ -20,4 +20,4 @@ the_end = TextClip("The End", font="Amiri-bold", color="white",
 final = CompositeVideoClip([the_end.set_pos('center'),clip],
                            size =clip.size)
                            
-final.write_videofile("../../theEnd.avi")
+final.write_videofile("./theEnd.mp4", audio=False)
