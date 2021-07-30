@@ -16,6 +16,7 @@ import numpy as np
 from moviepy.compat import DEVNULL, PY3
 from moviepy.config import get_setting  # ffmpeg, ffmpeg.exe, etc...
 from moviepy.tools import cvsecs
+from moviepy.util import log as l
 
 logging.captureWarnings(True)
 
@@ -98,6 +99,7 @@ class FFMPEG_VideoReader:
                         "stderr": sp.PIPE,
                         "stdin": DEVNULL}
 
+        l.debug("FFMPEG_VideoReader, cmd=%s" % (" ".join(cmd)))
         if os.name == "nt":
             popen_params["creationflags"] = 0x08000000
 
@@ -177,7 +179,7 @@ class FFMPEG_VideoReader:
         if pos == self.pos:
             return self.lastread
         elif (pos < self.pos) or (pos > self.pos + 100):
-            print("get_frame, pos=%s, self.pos=%s, reinit, t=%s" % (pos, self.pos, t))
+            l.debug("get_frame, pos=%s, self.pos=%s, reinit, t=%s" % (pos, self.pos, t))
             self.initialize(t)
             self.pos = pos
         else:
@@ -188,7 +190,7 @@ class FFMPEG_VideoReader:
 
     def close(self):
         if self.proc:
-            print("close ffmpeg video cmd, pid=%s" % (self.proc.pid))
+            l.debug("close ffmpeg video cmd, pid=%s" % (self.proc.pid))
             self.proc.terminate()
             self.proc.stdout.close()
             self.proc.stderr.close()
@@ -253,7 +255,7 @@ def ffmpeg_parse_infos(filename, print_infos=True, check_duration=True,
                     "stderr": sp.PIPE,
                     "stdin": DEVNULL}
 
-    print("ffmpeg_parse_infos, cmd=%s" % (cmd))
+    l.debug("ffmpeg_parse_infos, cmd=%s" % (" ".join(cmd)))
     if os.name == "nt":
         popen_params["creationflags"] = 0x08000000
 
@@ -265,7 +267,7 @@ def ffmpeg_parse_infos(filename, print_infos=True, check_duration=True,
 
     if print_infos:
         # print the whole info text returned by FFMPEG
-        print(infos)
+        l.debug(infos)
 
 
     lines = infos.splitlines()

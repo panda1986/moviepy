@@ -26,6 +26,8 @@ from .io.gif_writers import (write_gif, write_gif_with_image_io,
                              write_gif_with_tempfiles)
 from .tools.drawing import blit
 
+from moviepy.util import log as l
+
 
 class VideoClip(Clip):
     """Base class for video clips.
@@ -1132,6 +1134,7 @@ class TextClip(ImageClip):
 
         if print_cmd:
             print(" ".join(cmd))
+        l.debug("cmd=%s" % (" ".join(cmd)))
 
         try:
             subprocess_call(cmd, logger=None)

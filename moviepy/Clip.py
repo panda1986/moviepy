@@ -9,6 +9,7 @@ from copy import copy
 import numpy as np
 import proglog
 from tqdm import tqdm
+from moviepy.util import log as l
 
 from moviepy.decorators import (apply_to_audio, apply_to_mask,
                                 convert_to_seconds, outplace,
@@ -396,7 +397,7 @@ class Clip:
 
             if self.duration is None:
 
-                print("Error: subclip with negative times (here %s)" % (str((t_start, t_end)))
+                l.error("Error: subclip with negative times (here %s)" % (str((t_start, t_end)))
                       + " can only be extracted from clips with a ``duration``")
 
             else:

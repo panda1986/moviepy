@@ -11,6 +11,7 @@ from proglog import proglog
 
 from moviepy.compat import DEVNULL, PY3
 from moviepy.config import get_setting
+from moviepy.util import log as l
 
 
 class FFMPEG_VideoWriter:
@@ -117,7 +118,7 @@ class FFMPEG_VideoWriter:
             filename
         ])
 
-        print("video write, cmd=%s" % (cmd))
+        l.debug("video write, cmd=%s" % (" ".join(cmd)))
 
         popen_params = {"stdout": DEVNULL,
                         "stderr": logfile,
@@ -252,7 +253,7 @@ def ffmpeg_write_image(filename, image, logfile=False):
     else:
         log_file = sp.PIPE
 
-    print("write image, cmd=%s" % (cmd))
+    l.debug("write image, cmd=%s" % (" ".join(cmd)))
     popen_params = {"stdout": DEVNULL,
                     "stderr": log_file,
                     "stdin": sp.PIPE}

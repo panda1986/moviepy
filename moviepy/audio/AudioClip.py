@@ -8,6 +8,7 @@ from moviepy.audio.io.ffmpeg_audiowriter import ffmpeg_audiowrite
 from moviepy.Clip import Clip
 from moviepy.decorators import requires_duration
 from moviepy.tools import deprecated_version_of, extensions_dict
+from moviepy.util import log as l
 
 
 class AudioClip(Clip):
@@ -77,7 +78,7 @@ class AudioClip(Clip):
         nchunks = totalsize // chunksize + 1
 
         pospos = np.linspace(0, totalsize, nchunks + 1, endpoint=True, dtype=int)
-        print("AudioClip iter_chunks, nchunks=%s, total size=%s, chunk size=%s"%(nchunks, totalsize, chunksize))
+        l.debug("AudioClip iter_chunks, nchunks=%s, total size=%s, chunk size=%s"%(nchunks, totalsize, chunksize))
         
         for i in logger.iter_bar(chunk=list(range(nchunks))):
             size = pospos[i+1] - pospos[i]
@@ -316,7 +317,7 @@ def concatenate_audioclips(clips):
     durations = [c.duration for c in clips]
     tt = np.cumsum([0]+durations)  # start times, and end time.
     newclips = [c.set_start(t) for c, t in zip(clips, tt)]
-    print("concatenate audio newclips=%s"%(newclips))
+    l.debug("concatenate audio newclips=%s"%(newclips))
 
     result = CompositeAudioClip(newclips).set_duration(tt[-1])
 

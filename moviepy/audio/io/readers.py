@@ -8,6 +8,8 @@ from moviepy.compat import DEVNULL, PY3
 from moviepy.config import get_setting
 from moviepy.video.io.ffmpeg_reader import ffmpeg_parse_infos
 
+from moviepy.util import log as l
+
 
 class FFMPEG_AudioReader:
     """
@@ -90,7 +92,7 @@ class FFMPEG_AudioReader:
                         "stderr": sp.PIPE,
                         "stdin": DEVNULL}
 
-        print("FFMPEG_AudioReader init, cmd=%s" % (cmd))
+        l.debug("FFMPEG_AudioReader init, cmd=%s" % (" ".join(cmd)))
 
         if os.name == "nt":
             popen_params["creationflags"] = 0x08000000
